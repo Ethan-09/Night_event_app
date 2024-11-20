@@ -12,18 +12,16 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name ="user")
-public class User implements Serializable {
-
+@Table(name = "event")
+public class Event implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String username;
-    private String password;
-
+    private String eventName;
+    private User eventCreator;
 //    @ManyToMany
 //    private List<User> userList;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private Set<UserEventAssociation> lstRoleUserAssociation = new HashSet<>();
+    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<UserEventAssociation> setRoleUserAssociation = new HashSet<>();
 }
