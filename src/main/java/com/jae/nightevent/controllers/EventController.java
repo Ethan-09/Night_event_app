@@ -1,13 +1,16 @@
 package com.jae.nightevent.controllers;
 
+
 import com.jae.nightevent.dto.UserEventDTO;
 import com.jae.nightevent.entities.Event;
 import com.jae.nightevent.entities.User;
 import com.jae.nightevent.repositories.EventRepository;
 import com.jae.nightevent.repositories.UserRepository;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,10 +39,9 @@ public class EventController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String loggedInUsername = userDetails.getUsername(); // O cualquier atributo relevante
-        User userCreator = userRepository.findByUserName(loggedInUsername)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
+        String loggedInUsername = userDetails.getUsername();
+        User userCreator = userRepository.findByUsername(loggedInUsername);
+              //  .orElseThrow(() -> new RuntimeException("User not found"));
 
         String eventName = evnt.getEventName();
         Event event = new Event();
