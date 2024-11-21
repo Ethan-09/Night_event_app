@@ -45,6 +45,7 @@ public class EventController {
 
         String eventName = evnt.getEventName();
         Event event = new Event();
+        event.setDescription(evnt.getDescription());
         event.setEventCreator(userCreator);
         event.setEventName(eventName);
 

@@ -10,5 +10,5 @@ public class UserEventDTO {
 
 private int eventCreatorId;
 private String eventName;
-//descripcion
+private String description;
 }

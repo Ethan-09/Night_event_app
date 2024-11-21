@@ -19,6 +19,7 @@ public class Event implements Serializable {
     private int id;
     private String eventName;
     private User eventCreator;
+    private String description;
 //    @ManyToMany
 //    private List<User> userList;
 
