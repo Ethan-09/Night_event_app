@@ -1,7 +1,7 @@
 package com.jae.nightevent.controllers;
 
 
-import com.jae.nightevent.dto.UserEventDTO;
+import com.jae.nightevent.dto.EventDTO;
 import com.jae.nightevent.entities.Event;
 import com.jae.nightevent.entities.User;
 import com.jae.nightevent.repositories.EventRepository;
@@ -14,9 +14,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@RestController
 public class EventController {
     @Autowired
     private EventRepository eventRepository;
@@ -35,19 +37,17 @@ public class EventController {
         return event;
     }
     @PostMapping(path = "/events")
-    public ResponseEntity<String> createEvent(@RequestBody UserEventDTO evnt) {
+    public ResponseEntity<String> createEvent(@RequestBody EventDTO eventDTO) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        String loggedInUsername = userDetails.getUsername();
-        User userCreator = userRepository.findByUsername(loggedInUsername);
+        User user = (User) authentication.getPrincipal();
+        User userCreator = userRepository.findUserById(user.getId());
               //  .orElseThrow(() -> new RuntimeException("User not found"));
 
-        String eventName = evnt.getEventName();
         Event event = new Event();
-        event.setDescription(evnt.getDescription());
-        event.setEventCreator(userCreator);
-        event.setEventName(eventName);
+        event.setDescription(eventDTO.getDescription());
+        event.setEventCreatorId(user.getId());
+        event.setName(eventDTO.getName());
 
         eventRepository.save(event);
         return ResponseEntity.ok("Event created");

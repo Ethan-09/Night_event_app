@@ -17,8 +17,8 @@ public class Event implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String eventName;
-    private User eventCreator;
+    private String name;
+    private int eventCreatorId;
     private String description;
 //    @ManyToMany
 //    private List<User> userList;
