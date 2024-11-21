@@ -19,9 +19,14 @@ public class UserService {
 
     public User saveUser(UserDTO userDTO) {
         User user = new User();
+
         user.setUsername(userDTO.getUsername());
-        String encryptedPassword = encoder.encode(userDTO.getPassword());
-        user.setPassword(encryptedPassword);
+        user.setPassword(encoder.encode(userDTO.getPassword()));
+        user.setAccountNonExpired(true);
+        user.setAccountNonLocked(true);
+        user.setCredentialsNonExpired(true);
+        user.setEnabled(true);
+
         return userRepository.save(user);
     }
 }
