@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -20,8 +19,6 @@ public class Event implements Serializable {
     private String name;
     private int eventCreatorId;
     private String description;
-//    @ManyToMany
-//    private List<User> userList;
 
     @OneToMany(mappedBy = "event", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<UserEventAssociation> setRoleUserAssociation = new HashSet<>();

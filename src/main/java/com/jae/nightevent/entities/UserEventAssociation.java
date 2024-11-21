@@ -11,7 +11,6 @@ import java.io.Serializable;
 @Setter
 public class UserEventAssociation implements Serializable {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
